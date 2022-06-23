@@ -47,7 +47,7 @@ steps:
         timeoutInSeconds: 40
         runAs: root
 
- - type: Command
+  - type: Command
     timeoutInSeconds: 1200
     name: "Build container image 2"
     command: |
