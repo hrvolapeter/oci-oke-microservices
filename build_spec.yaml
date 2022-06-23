@@ -37,8 +37,9 @@ steps:
     timeoutInSeconds: 1200
     name: "Build container image"
     command: |
-      cd ${OCI_WORKSPACE_DIR}/service-a
-      docker build --pull --rm -t service-a -f DOCKERFILE .
+      ls
+      cd ${OCI_WORKSPACE_DIR}/${OCI_PRIMARY_SOURCE_NAME}/service-a
+      docker build --pull --rm -t service-a -f Dockerfile .
     onFailure:
       - type: Command
         command: |
@@ -51,8 +52,8 @@ steps:
     timeoutInSeconds: 1200
     name: "Build container image 2"
     command: |
-      cd ${OCI_WORKSPACE_DIR}/service-b
-      docker build --pull --rm -t service-b -f DOCKERFILE .
+      cd ${OCI_WORKSPACE_DIR}/${OCI_PRIMARY_SOURCE_NAME}/service-b
+      docker build --pull --rm -t service-b -f Dockerfile .
     onFailure:
       - type: Command
         command: |
@@ -62,8 +63,13 @@ steps:
         runAs: root
 
 outputArtifacts:
-  - name: output01
+  - name: service-a
     type: DOCKER_IMAGE
     # this location tag doesn't effect the tag used to deliver the container image
     # to the Container Registry
     location: service-a:latest
+  - name: service-b
+    type: DOCKER_IMAGE
+    # this location tag doesn't effect the tag used to deliver the container image
+    # to the Container Registry
+    location: service-b:latest
